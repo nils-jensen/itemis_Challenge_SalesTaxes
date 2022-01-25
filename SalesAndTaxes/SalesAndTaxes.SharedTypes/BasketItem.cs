@@ -28,7 +28,20 @@ namespace SalesAndTaxes.SharedTypes
 
         public string Name { get; private set; }
 
-        public decimal NetPrice { get => throw new NotImplementedException();}
+        public decimal GrossPrice { get; private set; }
+
+        public decimal NetPrice { get => decimal.Round(GrossPrice * TaxRate, 2, MidpointRounding.AwayFromZero); }
+        public decimal TaxRate
+        {
+            get
+            {
+                var rate = 0.00m
+                    + (!Taxes.HasFlag(TaxStatus.EXEMPT) ? 0.10m : 0.00m)
+                    + (Taxes.HasFlag(TaxStatus.IMPORTED) ? 0.05m : 0.00m);
+
+                return 1.00m + rate;
+            }
+        }
 
         private BasketItem() { }
 
@@ -50,10 +63,11 @@ namespace SalesAndTaxes.SharedTypes
 
                 var priceRaw = split[^1];
 
-                if(!decimal.TryParse(priceRaw, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var price))
+                if (!decimal.TryParse(priceRaw, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var price))
                 {
                     throw new ArgumentException("Can't get article price.", nameof(pRaw));
                 }
+                item.GrossPrice = price;
 
                 var itemDescriptions = split[1..^2];
 

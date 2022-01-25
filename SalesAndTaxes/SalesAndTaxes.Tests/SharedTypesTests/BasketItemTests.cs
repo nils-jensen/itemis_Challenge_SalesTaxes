@@ -93,6 +93,10 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedPrice = 12.49m;
 
+            var expectedTaxRate = 1.00m;
+
+            Assert.AreEqual(expectedTaxRate, exemptUnimported.TaxRate);
+
             Assert.AreEqual(expectedPrice, exemptUnimported.NetPrice);
         }
 
@@ -102,6 +106,10 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
             var exemptImported = BasketItem.ParseItem(EXEMPT_IMPORTED_RAW);
 
             var expectedPrice = 10.50m;
+
+            var expectedTaxRate = 1.05m;
+
+            Assert.AreEqual(expectedTaxRate, exemptImported.TaxRate);
 
             Assert.AreEqual(expectedPrice, exemptImported.NetPrice);
         }
@@ -113,6 +121,10 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedPrice = 20.89m;
 
+            var expectedTaxRate = 1.10m;
+
+            Assert.AreEqual(expectedTaxRate, unexemptUnimported.TaxRate);
+
             Assert.AreEqual(expectedPrice, unexemptUnimported.NetPrice);
         }
 
@@ -122,6 +134,10 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
             var unexemptImported = BasketItem.ParseItem(UNEXEMPT_IMPORTED_RAW);
 
             var expectedPrice = 32.19m;
+
+            var expectedTaxRate = 1.15m;
+
+            Assert.AreEqual(expectedTaxRate, unexemptImported.TaxRate);
 
             Assert.AreEqual(expectedPrice, unexemptImported.NetPrice);
         }
