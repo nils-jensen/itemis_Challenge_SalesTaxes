@@ -85,5 +85,45 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             Assert.IsTrue(string.Equals(book.Name, "book"));
         }
+
+        [TestMethod]
+        public void ExemptItemTax()
+        {
+            var exemptUnimported = BasketItem.ParseItem(EXEMPT_UNIMPORTED_RAW);
+
+            var expectedPrice = 12.49m;
+
+            Assert.AreEqual(expectedPrice, exemptUnimported.NetPrice);
+        }
+
+        [TestMethod]
+        public void ExemptImportedTax()
+        {
+            var exemptImported = BasketItem.ParseItem(EXEMPT_IMPORTED_RAW);
+
+            var expectedPrice = 10.50m;
+
+            Assert.AreEqual(expectedPrice, exemptImported.NetPrice);
+        }
+
+        [TestMethod]
+        public void RegularItemTax()
+        {
+            var unexemptUnimported = BasketItem.ParseItem(UNEXEMPT_UNIMPORTED_RAW);
+
+            var expectedPrice = 20.89m;
+
+            Assert.AreEqual(expectedPrice, unexemptUnimported.NetPrice);
+        }
+
+        [TestMethod]
+        public void RegularImportedItemTax()
+        {
+            var unexemptImported = BasketItem.ParseItem(UNEXEMPT_IMPORTED_RAW);
+
+            var expectedPrice = 32.19m;
+
+            Assert.AreEqual(expectedPrice, unexemptImported.NetPrice);
+        }
     }
 }

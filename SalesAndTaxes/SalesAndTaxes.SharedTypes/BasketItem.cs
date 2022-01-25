@@ -28,6 +28,8 @@ namespace SalesAndTaxes.SharedTypes
 
         public string Name { get; private set; }
 
+        public decimal NetPrice { get => throw new NotImplementedException();}
+
         private BasketItem() { }
 
 
