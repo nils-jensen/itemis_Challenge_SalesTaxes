@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "SalesAndTaxes.Client": {
+      "commandName": "Project"
+    }
+  }
+}
