@@ -17,6 +17,10 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
         private const string UNEXEMPT_IMPORTED_RAW = "1 imported bottle of perfume at 27.99";
 
+        private const string NAME_CONTAINING_IMPORTED = "1 box of imported chocolates at 11.25";
+
+        private const string BOX_OF_CHOCOLATES = "box of chocolates";
+
 
         [TestMethod]
         public void ParseExemptUnimportedItem()
@@ -56,6 +60,30 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
             Assert.IsFalse(unexemptImported.IsExempt);
 
             Assert.IsTrue(unexemptImported.IsImported);
+        }
+
+        [TestMethod]
+        public void ParseNameBeginningWithImported()
+        {
+            var beginningWithImported = BasketItem.ParseItem(EXEMPT_IMPORTED_RAW);
+
+            Assert.IsTrue(string.Equals(beginningWithImported.Name, BOX_OF_CHOCOLATES));
+        }
+
+        [TestMethod]
+        public void ParseNameContainingImported()
+        {
+            var containingImported = BasketItem.ParseItem(NAME_CONTAINING_IMPORTED);
+
+            Assert.IsTrue(string.Equals(containingImported.Name, BOX_OF_CHOCOLATES));
+        }
+
+        [TestMethod]
+        public void ParseSimpleName()
+        {
+            var book = BasketItem.ParseItem(EXEMPT_UNIMPORTED_RAW);
+
+            Assert.IsTrue(string.Equals(book.Name, "book"));
         }
     }
 }
