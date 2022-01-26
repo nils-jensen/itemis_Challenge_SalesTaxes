@@ -46,14 +46,9 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
                 }
             );
 
-            var expectedGrossTotal = 12.49m + 0.85m + 9.75m;
+            var expectedGrossTotal = 12.49m + 14.99m + 18.99m;
 
-            var expectedNetTotal = 0.00m;
-
-            foreach (var item in basket.Items)
-            {
-                expectedNetTotal += item.NetPrice;
-            }
+            var expectedNetTotal = GetExpectedNetTotal(basket);
 
             var expectedTaxes = expectedNetTotal - expectedGrossTotal;
 
@@ -78,12 +73,7 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedGrossTotal = 11.25m + 47.50m + 10.00m;
 
-            var expectedNetTotal = 0.00m;
-
-            foreach (var item in basket.Items)
-            {
-                expectedNetTotal += item.NetPrice;
-            }
+            var expectedNetTotal = GetExpectedNetTotal(basket);
 
             var expectedTaxes = expectedNetTotal - expectedGrossTotal;
 
@@ -92,6 +82,18 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
             Assert.AreEqual(expectedNetTotal, basket.NetTotal);
 
             Assert.AreEqual(expectedTaxes, basket.SalesTaxesTotal);
+        }
+
+        private static decimal GetExpectedNetTotal(Basket basket)
+        {
+            var ret = 0.00m;
+
+            foreach (var item in basket.Items)
+            {
+                ret += item.NetPrice;
+            }
+
+            return ret;
         }
     }
 }
