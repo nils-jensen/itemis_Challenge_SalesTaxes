@@ -67,6 +67,7 @@ namespace SalesAndTaxes.SharedTypes
                 {
                     throw new ArgumentException("Can't get article price.", nameof(pRaw));
                 }
+
                 item.GrossPrice = price;
 
                 var itemDescriptions = split[1..^2];
