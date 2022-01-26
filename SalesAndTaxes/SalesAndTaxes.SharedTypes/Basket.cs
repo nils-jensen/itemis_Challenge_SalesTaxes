@@ -9,11 +9,11 @@ namespace SalesAndTaxes.SharedTypes
     {
         public IList<BasketItem> Items { get; private set; }
 
-        public decimal GrossTotal { get => throw new NotImplementedException(); }
+        public decimal GrossTotal { get => Items.Select(pItem => pItem.GrossPrice).Sum(); }
 
-        public decimal NetTotal { get => throw new NotImplementedException(); }
+        public decimal NetTotal { get => Items.Select(pItem => pItem.NetPrice).Sum(); }
 
-        public decimal SalesTaxesTotal { get => throw new NotImplementedException(); }
+        public decimal SalesTaxesTotal { get => NetTotal - GrossTotal; }
 
         public Basket(IList<BasketItem> pItems)
         {
