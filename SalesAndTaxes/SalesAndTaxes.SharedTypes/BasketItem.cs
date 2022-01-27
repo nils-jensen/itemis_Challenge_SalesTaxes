@@ -28,9 +28,12 @@ namespace SalesAndTaxes.SharedTypes
 
         public string Name { get; private set; }
 
+        public int Amount { get; private set; }
+
         public decimal GrossPrice { get; private set; }
 
         public decimal NetPrice { get => decimal.Round(GrossPrice * TaxRate, 2, MidpointRounding.AwayFromZero); }
+
         public decimal TaxRate
         {
             get
@@ -61,6 +64,8 @@ namespace SalesAndTaxes.SharedTypes
                     throw new ArgumentException("Can't get article amount.", nameof(pRaw));
                 }
 
+                item.Amount = amount;
+
                 var priceRaw = split[^1];
 
                 if (!decimal.TryParse(priceRaw, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var price))
@@ -73,6 +78,11 @@ namespace SalesAndTaxes.SharedTypes
                 var itemDescriptions = split[1..^2];
 
                 var nameBuilder = new StringBuilder();
+
+                if (pRaw.Contains("imported"))
+                {
+                    nameBuilder.Append("imported ");
+                }
 
                 foreach (var descriptionPart in itemDescriptions)
                 {
@@ -89,10 +99,18 @@ namespace SalesAndTaxes.SharedTypes
 
                 item.Name = nameBuilder.ToString().TrimEnd(); // either this or catchhing it above before appending the whitespace
 
-                if (KnownExemptItems.Contains(item.Name))
+
+                foreach (var exemptItem in KnownExemptItems)
                 {
-                    item.Taxes |= TaxStatus.EXEMPT;
+                    if (item.Name.Contains(exemptItem))
+                    {
+                        item.Taxes |= TaxStatus.EXEMPT;
+                    }
                 }
+                //if (KnownExemptItems.Contains(item.Name))
+                //{
+                //    item.Taxes |= TaxStatus.EXEMPT;
+                //}
             }
             catch (Exception pExc)
             {

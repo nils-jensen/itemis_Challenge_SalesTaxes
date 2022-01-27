@@ -13,7 +13,16 @@ namespace SalesAndTaxes.SharedTypes
 
         public decimal NetTotal { get => Items.Select(pItem => pItem.NetPrice).Sum(); }
 
-        public decimal SalesTaxesTotal { get => NetTotal - GrossTotal; }
+        public decimal SalesTaxesTotal 
+        {
+            get
+            {
+                var sum =
+                Items.Select(pItem => pItem.NetPrice).Sum() - Items.Select(pItem => pItem.GrossPrice).Sum();
+
+                return Math.Round(sum / 0.05m, 0) * 0.05m;
+            }
+        }
 
         public Basket(IList<BasketItem> pItems)
         {

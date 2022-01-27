@@ -23,7 +23,7 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedGrossTotal = 12.49m + 0.85m + 9.75m;
 
-            var expectedNetTotal = expectedGrossTotal;
+            var expectedNetTotal = GetExpectedNetTotal(basket);
 
             var expectedTaxes = 0.00m;
 
@@ -50,7 +50,7 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedNetTotal = GetExpectedNetTotal(basket);
 
-            var expectedTaxes = expectedNetTotal - expectedGrossTotal;
+            var expectedTaxes = Math.Round((expectedNetTotal - expectedGrossTotal) / 0.05m, 0) * 0.05m;
 
             Assert.AreEqual(expectedGrossTotal, basket.GrossTotal);
 
@@ -75,7 +75,7 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
             var expectedNetTotal = GetExpectedNetTotal(basket);
 
-            var expectedTaxes = expectedNetTotal - expectedGrossTotal;
+            var expectedTaxes = Math.Round((expectedNetTotal - expectedGrossTotal) / 0.05m, 0) * 0.05m;
 
             Assert.AreEqual(expectedGrossTotal, basket.GrossTotal);
 

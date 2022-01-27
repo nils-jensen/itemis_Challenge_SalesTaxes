@@ -19,7 +19,7 @@ namespace SalesAndTaxes.Tests.SharedTypesTests
 
         private const string NAME_CONTAINING_IMPORTED = "1 box of imported chocolates at 11.25";
 
-        private const string BOX_OF_CHOCOLATES = "box of chocolates";
+        private const string BOX_OF_CHOCOLATES = "imported box of chocolates";
 
 
         [TestMethod]
