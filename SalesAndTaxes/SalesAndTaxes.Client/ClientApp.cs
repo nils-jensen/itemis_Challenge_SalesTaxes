@@ -33,15 +33,9 @@ namespace SalesAndTaxes.Client
                     inputLines.AddLast(input);
                 }
 
-                var items = new List<BasketItem>
-                (
-                    inputLines.Select(
-                        pLine =>
-                        BasketItem.ParseItem(pLine)
-                    )
-                );
+                var converter = new InputToBasketConverter(inputLines);
 
-                var basket = new Basket(items);
+                Console.WriteLine(converter.Convert());
             }
 
             Console.WriteLine("Goodbye!");
